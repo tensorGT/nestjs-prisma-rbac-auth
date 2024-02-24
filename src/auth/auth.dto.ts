@@ -6,3 +6,8 @@ export class RegisterDto {
 
   @IsString()
   @MinLength(6)
+  password!: string;
+
+  @IsOptional()
+  @IsIn(["user", "admin"])
+  role?: "user" | "admin";

@@ -8,3 +8,9 @@ export const Roles = (...roles: string[]) => SetMetadata("roles", roles);
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector, private readonly jwt: JwtService) {}
 
+  canActivate(context: ExecutionContext): boolean {
+    const req = context.switchToHttp().getRequest();
+    const header: string = req.headers.authorization || "";
+    const token = header.startsWith("Bearer ") ? header.slice(7) : "";
+    if (!token) throw new UnauthorizedException("missing token");
+

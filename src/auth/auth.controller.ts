@@ -17,3 +17,13 @@ function hashPw(pw: string): string {
 export class AuthController {
   constructor(private readonly jwt: JwtService) {}
 
+  @Post("register")
+  async register(@Body() dto: RegisterDto) {
+    const res = await pool.query(
+      "INSERT INTO users (email, password_hash, role) VALUES ($1, $2, $3) RETURNING id, email, role",
+      [dto.email, hashPw(dto.password), dto.role || "user"]
+    );
+    return res.rows[0];
+  }
+
+  @Post("login")
