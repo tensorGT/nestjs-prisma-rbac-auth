@@ -27,3 +27,13 @@ export class AuthController {
   }
 
   @Post("login")
+  async login(@Body() dto: LoginDto) {
+    const res = await pool.query("SELECT * FROM users WHERE email = $1", [dto.email]);
+    const user = res.rows[0];
+    if (!user || user.password_hash !== hashPw(dto.password)) {
+      return { error: "wrong email or password" };
+    }
+    const token = this.jwt.sign(
+      { sub: user.id, email: user.email, role: user.role },
+      { secret: process.env.JWT_SECRET || "dev_secret" }
+    );

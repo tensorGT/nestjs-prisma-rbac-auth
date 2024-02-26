@@ -14,3 +14,8 @@ export class RolesGuard implements CanActivate {
     const token = header.startsWith("Bearer ") ? header.slice(7) : "";
     if (!token) throw new UnauthorizedException("missing token");
 
+    try {
+      const payload = this.jwt.verify(token, { secret: process.env.JWT_SECRET || "dev_secret" });
+      req.user = payload;
+      const needed = this.reflector.get<string[]>("roles", context.getHandler());
+      if (!needed || needed.length === 0) return true;

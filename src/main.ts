@@ -10,3 +10,7 @@ import { RolesGuard } from "./auth/roles.guard";
   controllers: [AuthController],
   providers: [RolesGuard],
 })
+class AppModule {}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);

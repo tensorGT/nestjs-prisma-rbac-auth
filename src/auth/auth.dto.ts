@@ -11,3 +11,7 @@ export class RegisterDto {
   @IsOptional()
   @IsIn(["user", "admin"])
   role?: "user" | "admin";
+}
+
+export class LoginDto {
+  @IsEmail()
