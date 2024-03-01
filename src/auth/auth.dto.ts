@@ -15,3 +15,8 @@ export class RegisterDto {
 
 export class LoginDto {
   @IsEmail()
+  email!: string;
+
+  @IsString()
+  password!: string;
+}

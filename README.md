@@ -6,3 +6,5 @@ has register, login with jwt, dto check with `class-validator`, and `@Roles("adm
 ```bash
 npm install
 npm run build
+npm start
+```

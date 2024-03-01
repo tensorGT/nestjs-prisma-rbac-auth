@@ -37,3 +37,13 @@ export class AuthController {
       { sub: user.id, email: user.email, role: user.role },
       { secret: process.env.JWT_SECRET || "dev_secret" }
     );
+    return { access_token: token };
+  }
+
+  @Get("admin-only")
+  @UseGuards(RolesGuard)
+  @Roles("admin")
+  adminPing(@Req() req: { user: { email: string } }) {
+    return { ok: true, admin: req.user.email };
+  }
+}

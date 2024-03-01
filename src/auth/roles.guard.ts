@@ -19,3 +19,9 @@ export class RolesGuard implements CanActivate {
       req.user = payload;
       const needed = this.reflector.get<string[]>("roles", context.getHandler());
       if (!needed || needed.length === 0) return true;
+      return needed.includes(payload.role);
+    } catch {
+      throw new UnauthorizedException("bad token");
+    }
+  }
+}

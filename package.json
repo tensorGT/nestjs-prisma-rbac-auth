@@ -16,3 +16,8 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/pg": "^8.10.2",
+    "typescript": "^5.2.2"
+  }
+}
